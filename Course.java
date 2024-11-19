@@ -4,7 +4,7 @@ package projectphase2;
 
 import java.util.Scanner;  
 import javax.swing.JOptionPane;
-import java.io.*;
+
 
 public class Course {  
 private Student[] student; 
@@ -20,8 +20,6 @@ Scanner input=new Scanner(System.in);
 private String firstName;  
 private String LastName;  
 private String email;  
-
- 
 
 
 public Course (String courseName, String courseCode, int courseCapasity,String firstName, String lastNmae, String email, double salary) {  
@@ -46,30 +44,50 @@ return true;    }
  
  
 
-public void fillCourse() {  
+public void fillCourse() throws Exception {  
 // fills an arrary of student at once  
+ for (int i = 0; i < courseCapasity; i++) {
+        // Get student input
+        firstName = input.next();
+        if (firstName.isEmpty()) {
+            throw new IllegalArgumentException("First name cannot be empty.");
+        }
 
-for (int i = 0; i < courseCapasity; i++) {  
-//System.out.println("enter student information \n  first name\n ");
-firstName=input.next() ;  
-//System.out.println("\nlast name"); 
-LastName=input.next() ;  
-//System.out.println("\nemail");
-email=input.next();  
-student[i]= new Student( firstName, LastName,  email); 
-numOfStudents++;} } 
+        LastName = input.next();
+        if (LastName.isEmpty()) {
+            throw new IllegalArgumentException("Last name cannot be empty.");
+        }
+
+        email = input.next();
+        if (email.isEmpty() || !email.contains("@")) {
+            throw new IllegalArgumentException("Invalid email address.");
+        }
+
+        // Add the student to the array
+        student[i] = new Student(firstName, LastName, email);
+        numOfStudents++;
+    } } 
 
 
 
- 
+ // Method to add a student to the course
+    public void addStudent() {
+        if (CanSignIn()) {
+            if (numOfStudents >= courseCapasity) {
+                // Unchecked ArrayIndexOutOfBoundsException if trying to add beyond the array size
+                throw new ArrayIndexOutOfBoundsException("Cannot add more students. The course is full.");
+            }
 
-public void AddStudent() {  
-//checks if there is capastiy + adds a student to the arrey  
-if(CanSignIn()== true) { 
-//System.out.print("enter student first name, last name and email");  
-student[numOfStudents]= new Student(firstName, LastName,email );  
-numOfStudents++; } }  
+            // Adding a student to the course
+            System.out.println("Enter student first name, last name, and email:");
+            firstName = input.next();
+            LastName = input.next();
+            email = input.next();
 
+            student[numOfStudents] = new Student(firstName, LastName, email);
+            numOfStudents++;
+        }
+    }
  
  
 
@@ -126,4 +144,3 @@ return teacher;
  
 
 } 
-
