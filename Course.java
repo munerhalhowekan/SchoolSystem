@@ -1,5 +1,5 @@
 
-package projectphase2;
+package javaphase3;
 
 
 import java.util.Scanner;  

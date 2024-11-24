@@ -1,5 +1,5 @@
 
-package projectphase2;
+package javaphase3;
 
 //user defind excption
 public class InputOutOfRangeException extends RuntimeException {

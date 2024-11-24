@@ -1,4 +1,4 @@
-package projectphase2;
+package javaphase3;
 
 
 public class Member {
