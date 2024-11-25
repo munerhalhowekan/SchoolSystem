@@ -1,0 +1,146 @@
+
+package javaphase3;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import javaphase3.Teacher;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author muner
+ */
+public class SecondFrame extends javax.swing.JFrame {
+    Assistant assistant;
+    
+private Student[] Student;
+
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       String firstName =jTextField1.getText().trim();
+        String lastName =jTextField2.getText().trim();
+        String yearsText = jTextField6.getText().trim();
+        String email =jTextField3.getText().trim();
+        String salaryText = jTextField4.getText().trim();
+       String absensDaysText = jTextField5.getText().trim();
+       
+       
+         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || salaryText.isEmpty() ) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         double salary = Double.parseDouble(salaryText);  // Ensure salary is a number
+        int yearsOfwork = Integer.parseInt(yearsText);   // Ensure years of work is a number
+        int absensDays = Integer.parseInt(absensDaysText);
+            
+      
+        
+            assistant = new Assistant(firstName, lastName, email, salary,yearsOfwork,absensDays);
+            JOptionPane.showMessageDialog(this, "Assistant added successfully!");
+           jTextField1.setText("");
+   jTextField2.setText("");
+   jTextField6.setText("");
+   jTextField3.setText("");
+   jTextField4.setText("");
+   jTextField5.setText("");
+  
+
+        
+
+    
+    }                                        
+
+    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+     String courseName =jTextField16.getText().trim();
+        String courseCode =jTextField17.getText().trim();
+        String firstName =jTextField18.getText().trim();
+        String lastNmae = jTextField4.getText().trim();
+         String email = jTextField20.getText().trim();
+         String salary2 =  jTextField21.getText().trim();
+          String absensDays2= jTextField7.getText().trim();
+       String yearsOfwork2 = jTextField22.getText().trim();
+       String size1= jTextField8.getText().trim();
+       
+       
+        double salary = Double.parseDouble(salary2);  // Ensure salary is a number
+        int yearsOfwork = Integer.parseInt(yearsOfwork2);   // Ensure years of work is a number
+        int absensDays = Integer.parseInt(absensDays2);
+         int size = Integer.parseInt(size1);
+	 Course list= new Course (courseName,  courseCode, size,firstName,  lastNmae,  email,   salary, yearsOfwork, absensDays); 
+         
+         JOptionPane.showMessageDialog(this, "Course  added successfully!");
+          jTextField16.setText("");
+   jTextField17.setText("");
+   jTextField18.setText("");
+   jTextField4.setText("");
+   jTextField20.setText("");
+             jTextField21.setText("");
+   jTextField7.setText("");
+   jTextField22.setText("");
+   jTextField8.setText("");
+  
+
+	
+    }                                        
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+      // Save file button
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("students.dat"))) {
+            Object Students;
+            oos.writeObject(Student);  // Write the list of students to the file
+            JOptionPane.showMessageDialog(this, "Students saved to file successfully!", "Save", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error saving file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       // Load file button
+         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("students.dat"))) {
+            Student = (Student[]) ois.readObject();  // Read the list of students from the file
+            StringBuilder message = new StringBuilder("Loaded Students:\n");
+           for (int i = 0; i < Student.length; i++) {
+                message.append(Student.toString()).append("\n");
+            }
+            JOptionPane.showMessageDialog(this, message.toString(), "Load", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException | ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Error loading file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+         Assistant test =  assistant;
+         if(test == null){
+            jTextArea1.setText("there is no Assistant found") ;
+            return; }
+         else {
+              jTextArea1.setText("");
+              jTextArea1.append(test.bonus());
+              jTextArea1.append("\n");
+              jTextArea1.append(test.calculateSalay());
+         }
+       
+    }                                        
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       Student[] test =  Student;
+         if(test == null){
+            jTextArea1.setText("there is no Students found") ;
+            return; }
+       
+         
+    }                                        
+
+   
